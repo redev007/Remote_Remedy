@@ -1,0 +1,44 @@
+services:
+  frontend:
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
+    depends_on: [backend]
+    ports:
+      - "3000:3000"
+    environment:
+      # Stripe Secret Key
+      - VITE_PUBLICATION_KEY=your_stripe_secret_key
+      # Jitsi Key
+      - VITE_JAAS_APP_ID=your_jitsi_meet_key
+      # API Key for chatbot
+      - VITE_API_KEY = 'your_api_key'
+
+  backend:    
+    build:
+      context: backend
+      dockerfile: Dockerfile  
+      
+    ports:
+      - "5000:5000"  
+    environment:
+      # MongoDB URL
+      - DBURL=mongodb://MongoUser:MongoPassword@MongoServer
+      # NodeMailer
+      - HOST_EMAIL=your_host_email
+      - PASSWORD=your_app_password
+      - PORT=587
+
+      # Stripe
+      - STRIPE_SECRET_KEY=your_stripe_secret_key
+
+      # Backend server after deployment
+      -  DOMAIN=your_domain
+
+      # JWT Secret for encryption
+      - SECRET=your_secret_key
+
+      # Notification
+      - WHATSAPP=your_whatsapp_api_token
+
+        
